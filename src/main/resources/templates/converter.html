@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Converter</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/js/bootstrap.min.js}" rel="script"></script>
+    <script th:src="@{/js/jquery-3.5.1.slim.min.js}" rel="script"></script>
+</head>
+<body class="bg-dark">
+
+<!-- Main container -->
+<!-- container.fluid -->
+
+<div class="container-fluid">
+    <div class="m-5 card-body bg-dark" style="min-height: 150px">
+<!--        <div th:if="${attributes.result }" class="text-warning row mt-3 justify-content-center text-justify">-->
+<!--            <div class="col-md-5">-->
+<!--                <p class="h3">-->
+<!--                    Thank you for using our Currency Calculator! Page use free api access.-->
+<!--                    Standard call frequency is 5 calls per minute and 500 calls per day.-->
+<!--                    Sorry for inconvenience.-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+    <div class="row justify-content-center align-items-center">
+        <div class="card shadow bg-secondary">
+            <div class="card-body ">
+                <form method="post" name="send" action="/" th:action="@{/}">
+                    <div class="row justify-content-center">
+
+                        <div class="col-sm-5">
+                            <label for="currFrom">From currency: </label>
+                            <select type="text" class="custom-select" th:field="${attributes.from}"
+                                    id="currFrom">
+                                <option type="text" value="" label="Choose currency"></option>
+                                <option type="text" th:each="curr : ${currencies.entrySet()}"
+                                        th:value="${curr.getKey()}"
+                                        th:text="${curr}">
+                                </option>
+                            </select>
+                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.from}">ERROR</div>
+                        </div>
+
+                        <div class="col-sm-5">
+                            <label for="currTo">To currency: </label>
+                            <select type="text" class="custom-select bg-light" th:field="${attributes.to}" id="currTo">
+                                <option value="" label="Choose currency"></option>
+                                <option type="text" th:each="curr : ${currencies.entrySet()}"
+                                        th:value="${curr.getKey()}"
+                                        th:text="${curr}">
+                                </option>
+                            </select>
+                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.to}">ERROR</div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-3 justify-content-center">
+                        <div class="col-5">
+                            <label for="fromAmount">Amount: </label>
+                            <input class="form-control bg-light" th:field="${attributes.amount}" id="fromAmount">
+                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.amount}">ERROR</div>
+                        </div>
+                        <div class="col-5">
+                            <label for="result">Result: </label>
+                            <div class="form-control bg-light" id="result" th:text="${attributes.result}">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-3 justify-content-center">
+                        <div class="col-10 mt-3">
+                            <input class="btn btn-success btn-block" id="getRate" type="submit"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of main container -->
+
+<script>
+    $(document).ready(function () {
+        $('#getRate').on('click', function () {
+            this.value = 'Sending..';
+            this.disabled = true;
+            this.form.submit();
+        })
+    })
+</script>
+
+</body>
+</html>

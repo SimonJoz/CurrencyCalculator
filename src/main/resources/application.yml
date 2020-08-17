@@ -1,0 +1,10 @@
+spring:
+  mvc:
+    view:
+      suffix: ".html"
+      prefix: "/resources/templates/"
+  currenciesRateApi:
+    apiURL: "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency={currencyFrom}&to_currency={currencyTo}&apikey={key}"
+    key: "HISJK73BFO7UFTVS"
+  application:
+    currenciesPath: "forex_currency_list.csv"
