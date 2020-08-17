@@ -24,10 +24,9 @@ public class ConvertController {
     private final CalculatorService calculatorService;
 
     @ModelAttribute("currencies")
-    public Map<String, String> addAttributes() {
+    public Map<String, String> addCurrencies() {
         return currenciesProvider.getCurrencies();
     }
-
 
     @ModelAttribute("attributes")
     public CurrencyAttributes getAttribute() {
@@ -44,9 +43,10 @@ public class ConvertController {
         if (bindingResult.hasErrors()) {
             return "converter";
         }
-        System.out.println(attributes.getFrom());
-        System.out.println(attributes.getTo());
         calculatorService.convertCurrencies(attributes);
         return "converter";
     }
+
+
+
 }

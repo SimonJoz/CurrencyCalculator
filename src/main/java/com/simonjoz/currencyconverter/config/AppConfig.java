@@ -2,20 +2,27 @@ package com.simonjoz.currencyconverter.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
 @Configuration
-public class AppConfig {
+public class AppConfig implements WebMvcConfigurer {
+
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
+    }
 
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-        sessionLocaleResolver.setDefaultLocale(new Locale("PL"));
+        sessionLocaleResolver.setDefaultLocale(Locale.forLanguageTag("pl"));
         return sessionLocaleResolver;
     }
 
@@ -26,8 +33,9 @@ public class AppConfig {
         return lci;
     }
 
-    public void addInterceptors(InterceptorRegistry ir) {
-        ir.addInterceptor(localeChangeInterceptor());
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
     }
 
 }

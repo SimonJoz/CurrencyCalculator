@@ -18,8 +18,8 @@ public class CalculatorService {
     public void convertCurrencies(CurrencyAttributes attributes) {
         log.info("Calculate result ");
         BigDecimal rate = provider.getRate(attributes.getFrom(), attributes.getTo());
-        BigDecimal result = attributes.getAmount().multiply(rate);
-        attributes.setResult(result);
+        BigDecimal result = attributes.getFromAmount().multiply(rate);
+        attributes.setToAmount(result);
     }
 
 

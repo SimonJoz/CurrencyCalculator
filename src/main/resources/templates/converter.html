@@ -2,94 +2,100 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Currency Converter</title>
+    <title th:text="#{h.main}"></title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <script th:src="@{/js/bootstrap.min.js}" rel="script"></script>
-    <script th:src="@{/js/jquery-3.5.1.slim.min.js}" rel="script"></script>
 </head>
 <body class="bg-dark">
-
-<!-- Main container -->
-<!-- container.fluid -->
-
-<div class="container-fluid">
-    <div class="m-5 card-body bg-dark" style="min-height: 150px">
-<!--        <div th:if="${attributes.result }" class="text-warning row mt-3 justify-content-center text-justify">-->
-<!--            <div class="col-md-5">-->
-<!--                <p class="h3">-->
-<!--                    Thank you for using our Currency Calculator! Page use free api access.-->
-<!--                    Standard call frequency is 5 calls per minute and 500 calls per day.-->
-<!--                    Sorry for inconvenience.-->
-<!--                </p>-->
-<!--            </div>-->
-<!--        </div>-->
+<header class="row mt-2 justify-content-center">
+    <div class="col-sm-10 d-flex justify-content-end">
+        <a th:href="@{/?lang=pl}">
+            <input class="btn btn-secondary px-2 mr-1" type="button" th:value="PL"/>
+        </a>
+        <a th:href="@{/?lang=en}">
+            <input class="btn btn-secondary px-2" type="submit" th:value="EN"/>
+        </a>
     </div>
-    <div class="row justify-content-center align-items-center">
+</header>
+<!-- Main container -->
+<section class="container-fluid">
+    <header class="my-4 card-body bg-dark d-flex justify-content-center">
+        <h1 class="font-weight-lighter text-warning" th:text="#{h.main}"></h1>
+    </header>
+    <article class="row d-flex justify-content-center mb-3" th:if="${attributes.toAmount} eq 0">
+        <div class="col-sm-8" id="infoMsg">
+            <div class="card border-warning border bg-dark text-center text-light">
+                <p class="h5 pt-3" th:text="#{m.thanks}"></p>
+                <p class="px-4 pt-2 pb-1" th:text="#{m.apiLimit}"></p>
+                <p th:text="#{m.wait}"></p>
+                <div class="row justify-content-center">
+                    <div class="progress mb-2" style="width: 35%">
+                        <div class="progress-bar progress-bar-striped bg-info"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+    <main class="row justify-content-center align-items-center mx-sm-2">
         <div class="card shadow bg-secondary">
             <div class="card-body ">
                 <form method="post" name="send" action="/" th:action="@{/}">
-                    <div class="row justify-content-center">
+                    <section class="row justify-content-center">
 
                         <div class="col-sm-5">
-                            <label for="currFrom">From currency: </label>
+                            <label for="currFrom" th:text="#{l.fromCurrency}"></label>
                             <select type="text" class="custom-select" th:field="${attributes.from}"
                                     id="currFrom">
-                                <option type="text" value="" label="Choose currency"></option>
+                                <option type="text" value="" th:label="#{l.chooseOption}"></option>
                                 <option type="text" th:each="curr : ${currencies.entrySet()}"
                                         th:value="${curr.getKey()}"
                                         th:text="${curr}">
                                 </option>
                             </select>
-                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.from}">ERROR</div>
+                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.from}"></div>
                         </div>
 
                         <div class="col-sm-5">
-                            <label for="currTo">To currency: </label>
+                            <label for="currTo" th:text="#{l.toCurrency}">"</label>
                             <select type="text" class="custom-select bg-light" th:field="${attributes.to}" id="currTo">
-                                <option value="" label="Choose currency"></option>
+                                <option value="" th:label="#{l.chooseOption}"></option>
                                 <option type="text" th:each="curr : ${currencies.entrySet()}"
                                         th:value="${curr.getKey()}"
                                         th:text="${curr}">
                                 </option>
                             </select>
-                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.to}">ERROR</div>
+                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.to}"></div>
                         </div>
 
-                    </div>
-                    <div class="row mt-3 justify-content-center">
-                        <div class="col-5">
-                            <label for="fromAmount">Amount: </label>
-                            <input class="form-control bg-light" th:field="${attributes.amount}" id="fromAmount">
-                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.amount}">ERROR</div>
+                    </section>
+                    <section class="row mt-3 justify-content-center">
+                        <div class="col-sm-5">
+                            <label for="fromAmount" th:text="#{l.amount}"></label>
+                            <input class="form-control bg-light" th:field="${attributes.fromAmount}" id="fromAmount">
+                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.fromAmount}"></div>
                         </div>
-                        <div class="col-5">
-                            <label for="result">Result: </label>
-                            <div class="form-control bg-light" id="result" th:text="${attributes.result}">
+                        <div class="col-sm-5">
+                            <label for="result" th:text="#{l.result}"></label>
+                            <div class="form-control bg-light" id="result" th:text="${attributes.toAmount}">
                             </div>
                         </div>
 
-                    </div>
-                    <div class="row mt-3 justify-content-center">
-                        <div class="col-10 mt-3">
-                            <input class="btn btn-success btn-block" id="getRate" type="submit"/>
+                    </section>
+                    <section class="row mt-3 justify-content-center">
+                        <div class="col-sm-10 mt-3">
+                            <input class="btn btn-success btn-block" id="getRate" type="submit"
+                                   th:value="#{btn.submit}"/>
                         </div>
-                    </div>
+                    </section>
                 </form>
             </div>
         </div>
-    </div>
-</div>
+    </main>
+</section>
 <!-- End of main container -->
-
-<script>
-    $(document).ready(function () {
-        $('#getRate').on('click', function () {
-            this.value = 'Sending..';
-            this.disabled = true;
-            this.form.submit();
-        })
-    })
-</script>
+<script th:src="@{/js/jquery-3.5.1.slim.min.js}" rel="script"></script>
+<script th:src="@{/js/my.js}" rel="script"></script>
 
 </body>
 </html>

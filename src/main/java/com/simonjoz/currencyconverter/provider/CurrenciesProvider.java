@@ -16,7 +16,6 @@ import java.util.Map;
 @Service
 @Getter
 public class CurrenciesProvider {
-
     @Value("${spring.application.currenciesPath}")
     private  String currenciesPath;
 

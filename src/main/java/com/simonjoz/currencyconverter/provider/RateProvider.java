@@ -2,11 +2,11 @@ package com.simonjoz.currencyconverter.provider;
 
 import com.simonjoz.currencyconverter.client.CurrenciesRatesResponse;
 import com.simonjoz.currencyconverter.client.CurrencyExchangeClient;
-import com.simonjoz.currencyconverter.exceptions.APILimitException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.beans.BeanInfo;
 import java.math.BigDecimal;
 
 @Slf4j
@@ -22,8 +22,8 @@ public class RateProvider {
         try {
             response = rate.getCurrencyExchangeRate().getRate();
         } catch (NullPointerException e) {
-            log.warn("Invalid response.");
-            throw new APILimitException();
+            log.warn("Api call limit exceeded.");
+            return BigDecimal.ZERO;
         }
         return response;
     }

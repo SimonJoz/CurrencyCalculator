@@ -18,6 +18,6 @@ public class CurrencyAttributes {
     @NotBlank
     private String to;
     @NotNull
-    private BigDecimal amount;
-    private BigDecimal result;
+    private BigDecimal fromAmount;
+    private BigDecimal toAmount;
 }
