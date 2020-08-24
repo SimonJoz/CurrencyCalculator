@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title th:text="#{h.main}"></title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- MDBootstrap flags -->
+    <link th:href="@{/css/flag.min.css}" rel="stylesheet">
+    <link th:href="@{/css/currency-flags.min.css}" rel="stylesheet">
+    <link th:href="@{/css/boostrap-select.min.css}" rel="stylesheet">
+
 </head>
 <body class="bg-dark">
 <header class="row mt-2 justify-content-center">
@@ -45,12 +50,12 @@
 
                         <div class="col-sm-5">
                             <label for="currFrom" th:text="#{l.fromCurrency}"></label>
-                            <select type="text" class="custom-select" th:field="${attributes.from}"
+                            <select type="text" class="selectpicker show-tick" data-live-search="true"
+                                    th:field="${attributes.from}"
+                                    th:title="#{l.chooseOption}"
                                     id="currFrom">
-                                <option type="text" value="" th:label="#{l.chooseOption}"></option>
                                 <option type="text" th:each="curr : ${currencies.entrySet()}"
-                                        th:value="${curr.getKey()}"
-                                        th:text="${curr}">
+                                        th:text="${curr}" th:value="${curr.getKey()}">
                                 </option>
                             </select>
                             <div class="text-warning ml-1 mt-1" th:errors="${attributes.from}"></div>
@@ -58,11 +63,12 @@
 
                         <div class="col-sm-5">
                             <label for="currTo" th:text="#{l.toCurrency}">"</label>
-                            <select type="text" class="custom-select bg-light" th:field="${attributes.to}" id="currTo">
-                                <option value="" th:label="#{l.chooseOption}"></option>
+                            <select type="text" class="selectpicker show-tick"
+                                    data-live-search="true"
+                                    th:title="#{l.chooseOption}"
+                                    th:field="${attributes.to}" id="currTo">
                                 <option type="text" th:each="curr : ${currencies.entrySet()}"
-                                        th:value="${curr.getKey()}"
-                                        th:text="${curr}">
+                                        th:value="${curr.getKey()}" th:text="${curr}">
                                 </option>
                             </select>
                             <div class="text-warning ml-1 mt-1" th:errors="${attributes.to}"></div>
@@ -94,8 +100,15 @@
     </main>
 </section>
 <!-- End of main container -->
-<script th:src="@{/js/jquery-3.5.1.slim.min.js}" rel="script"></script>
-<script th:src="@{/js/my.js}" rel="script"></script>
 
+<script th:src="@{/js/jquery-3.5.1.slim.min.js}" rel="script"></script>
+<script th:src="@{/js/bootstrap.bundle.js}" rel="script"></script>
+<script th:src="@{/js/bootstrap-select.min.js}" rel="script"></script>
+<script th:src="@{/js/my.js}" rel="script"></script>
+<script>
+    $(function () {
+        $('.dropdown-toggle').dropdown();
+    });
+</script>
 </body>
 </html>

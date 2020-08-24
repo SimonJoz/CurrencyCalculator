@@ -38,6 +38,11 @@ public class ConvertController {
         return "converter";
     }
 
+    @GetMapping("/404")
+    public String pageNotFound() {
+        return "404";
+    }
+
     @PostMapping
     public String postResult(@Valid @ModelAttribute("attributes") CurrencyAttributes attributes, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
