@@ -5,101 +5,105 @@
     <title th:text="#{h.main}"></title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <!-- MDBootstrap flags -->
-    <link th:href="@{/css/flag.min.css}" rel="stylesheet">
-    <link th:href="@{/css/currency-flags.min.css}" rel="stylesheet">
     <link th:href="@{/css/boostrap-select.min.css}" rel="stylesheet">
 
 </head>
 <body class="bg-dark">
-<header class="row mt-2 justify-content-center">
-    <div class="col-sm-10 d-flex justify-content-end">
-        <a th:href="@{/?lang=pl}">
-            <input class="btn btn-secondary px-2 mr-1" type="button" th:value="PL"/>
-        </a>
-        <a th:href="@{/?lang=en}">
-            <input class="btn btn-secondary px-2" type="submit" th:value="EN"/>
-        </a>
-    </div>
-</header>
-<!-- Main container -->
-<section class="container-fluid">
-    <header class="my-4 card-body bg-dark d-flex justify-content-center">
-        <h1 class="font-weight-lighter text-warning" th:text="#{h.main}"></h1>
+<div class="container">
+    <header class="row mt-2 justify-content-center">
+        <div class="col-sm-10 d-flex justify-content-end">
+            <a th:href="@{/?lang=pl}">
+                <input class="btn btn-secondary px-2 mr-1" type="button" th:value="PL"/>
+            </a>
+            <a th:href="@{/?lang=en}">
+                <input class="btn btn-secondary px-2" type="submit" th:value="EN"/>
+            </a>
+        </div>
     </header>
-    <article class="row d-flex justify-content-center mb-3" th:if="${attributes.toAmount} eq 0">
-        <div class="col-sm-8" id="infoMsg">
-            <div class="card border-warning border bg-dark text-center text-light">
-                <p class="h5 pt-3" th:text="#{m.thanks}"></p>
-                <p class="px-4 pt-2 pb-1" th:text="#{m.apiLimit}"></p>
-                <p th:text="#{m.wait}"></p>
-                <div class="row justify-content-center">
-                    <div class="progress mb-2" style="width: 35%">
-                        <div class="progress-bar progress-bar-striped bg-info"></div>
+    <!-- Main container -->
+    <section class="container-fluid">
+        <header class="my-4 card-body bg-dark d-flex justify-content-center">
+            <h1 class="font-weight-lighter text-warning" th:text="#{h.main}"></h1>
+        </header>
+        <article class="row d-flex justify-content-center mb-3" th:if="${attributes.toAmount} eq 0">
+            <div class="col-sm-8" id="infoMsg">
+                <div class="card border-warning border bg-dark text-center text-light">
+                    <p class="h5 pt-3" th:text="#{m.thanks}"></p>
+                    <p class="px-4 pt-2 pb-1" th:text="#{m.apiLimit}"></p>
+                    <p th:text="#{m.wait}"></p>
+                    <div class="row justify-content-center">
+                        <div class="progress mb-2" style="width: 35%">
+                            <div class="progress-bar progress-bar-striped bg-info"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </article>
+        </article>
 
 
-    <main class="row justify-content-center align-items-center mx-sm-2">
-        <div class="card shadow bg-secondary">
-            <div class="card-body ">
-                <form method="post" name="send" action="/" th:action="@{/}">
-                    <section class="row justify-content-center">
+        <main class="row justify-content-center align-items-center">
+            <div class="card shadow bg-secondary">
+                <div class="card-body ">
+                    <form method="post" name="send" action="/" th:action="@{/}">
+                        <section class="row justify-content-center">
 
-                        <div class="col-sm-5">
-                            <label for="currFrom" th:text="#{l.fromCurrency}"></label>
-                            <select type="text" class="selectpicker show-tick" data-live-search="true"
-                                    th:field="${attributes.from}"
-                                    th:title="#{l.chooseOption}"
-                                    id="currFrom">
-                                <option type="text" th:each="curr : ${currencies.entrySet()}"
-                                        th:text="${curr}" th:value="${curr.getKey()}">
-                                </option>
-                            </select>
-                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.from}"></div>
-                        </div>
-
-                        <div class="col-sm-5">
-                            <label for="currTo" th:text="#{l.toCurrency}">"</label>
-                            <select type="text" class="selectpicker show-tick"
-                                    data-live-search="true"
-                                    th:title="#{l.chooseOption}"
-                                    th:field="${attributes.to}" id="currTo">
-                                <option type="text" th:each="curr : ${currencies.entrySet()}"
-                                        th:value="${curr.getKey()}" th:text="${curr}">
-                                </option>
-                            </select>
-                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.to}"></div>
-                        </div>
-
-                    </section>
-                    <section class="row mt-3 justify-content-center">
-                        <div class="col-sm-5">
-                            <label for="fromAmount" th:text="#{l.amount}"></label>
-                            <input class="form-control bg-light" th:field="${attributes.fromAmount}" id="fromAmount">
-                            <div class="text-warning ml-1 mt-1" th:errors="${attributes.fromAmount}"></div>
-                        </div>
-                        <div class="col-sm-5">
-                            <label for="result" th:text="#{l.result}"></label>
-                            <div class="form-control bg-light" id="result" th:text="${attributes.toAmount}">
+                            <div class="col-sm-5 mb-2 mb-md-0">
+                                <label class="col-12 px-0" for="currFrom" th:text="#{l.fromCurrency}"></label>
+                                <select type="text" class="selectpicker show-tick" data-live-search="true"
+                                        th:field="${attributes.from}"
+                                        th:title="#{l.chooseOption}"
+                                        id="currFrom">
+                                    <option type="text" th:each="curr : ${currencies.entrySet()}"
+                                            th:text="${curr}" th:value="${curr.getKey()}">
+                                    </option>
+                                </select>
+                                <div class="text-warning ml-1 mt-1" th:errors="${attributes.from}"></div>
                             </div>
-                        </div>
 
-                    </section>
-                    <section class="row mt-3 justify-content-center">
-                        <div class="col-sm-10 mt-3">
-                            <input class="btn btn-success btn-block" id="getRate" type="submit"
-                                   th:value="#{btn.submit}"/>
-                        </div>
-                    </section>
-                </form>
+                            <div class="col-sm-5 mb-md-0">
+                                <label class="col-12 px-0" for="currTo" th:text="#{l.toCurrency}">"</label>
+                                <select type="text" class="selectpicker show-tick"
+                                        data-live-search="true"
+                                        th:title="#{l.chooseOption}"
+                                        th:field="${attributes.to}" id="currTo">
+                                    <option type="text" th:each="curr : ${currencies.entrySet()}"
+                                            th:value="${curr.getKey()}" th:text="${curr}">
+                                    </option>
+                                </select>
+                                <div class="text-warning ml-1 mt-1" th:errors="${attributes.to}"></div>
+                            </div>
+
+                        </section>
+                        <section class="row mt-3 justify-content-center">
+                            <div class="col-sm-5">
+                                <label for="fromAmount" th:text="#{l.amount}"></label>
+                                <input class="form-control bg-light" th:field="${attributes.fromAmount}"
+                                       id="fromAmount">
+                                <div class="text-warning ml-1 mt-1" th:errors="${attributes.fromAmount}"></div>
+                            </div>
+                            <div class="col-sm-5">
+                                <label for="result" th:text="#{l.result}"></label>
+                                <div class="form-control bg-light" id="result" th:text="${attributes.toAmount}">
+                                </div>
+                            </div>
+
+                        </section>
+                        <section class="row mt-3 justify-content-center">
+                            <div class="col-sm-10 mt-3">
+                                <input class="btn btn-success btn-block" id="getRate" type="submit"
+                                       th:value="#{btn.submit}"/>
+                            </div>
+                        </section>
+                    </form>
+                </div>
             </div>
-        </div>
-    </main>
-</section>
-<!-- End of main container -->
+        </main>
+    </section>
+    <!-- End of main container -->
+</div>
+<footer class="footer text-secondary mt-5 mb-3">
+    <div class="d-flex justify-content-center"> &copy 2020 Simon Joz</div>
+</footer>
 
 <script th:src="@{/js/jquery-3.5.1.slim.min.js}" rel="script"></script>
 <script th:src="@{/js/bootstrap.bundle.js}" rel="script"></script>
