@@ -17,7 +17,7 @@ import java.util.Map;
 @Getter
 public class CurrenciesProvider {
     @Value("${spring.application.currenciesPath}")
-    private  String currenciesPath;
+    private String currenciesPath;
 
     private Map<String, String> currencies = new HashMap<>();
 
@@ -29,11 +29,11 @@ public class CurrenciesProvider {
             Files.newBufferedReader(Path.of(currenciesPath))
                     .lines().forEach(line -> {
                 String[] split = line.split(",");
-                currencies.put(split[0],split[1]);
+                currencies.put(split[0], split[1]);
             });
         } catch (IOException e) {
             log.error("Currencies file not found !");
-        } catch (ArrayIndexOutOfBoundsException ex){
+        } catch (ArrayIndexOutOfBoundsException ex) {
             log.error("Parsing currencies file failed.");
         }
     }
